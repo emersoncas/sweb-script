@@ -1,0 +1,111 @@
+-- Gui to Lua
+-- Version: 3.2
+
+-- Instances:
+
+local ScreenGui = Instance.new("ScreenGui")
+local anime = Instance.new("Frame")
+local aimlock = Instance.new("TextButton")
+local anime2 = Instance.new("Frame")
+local TextButton2 = Instance.new("TextButton")
+
+--Properties:
+
+ScreenGui.Parent = game.CoreGui
+
+anime.Name = "anime"
+anime.Parent = ScreenGui
+anime.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+anime.BorderColor3 = Color3.fromRGB(26, 26, 26)
+anime.Position = UDim2.new(0.259656638, 0, 0.256449163, 0)
+anime.Size = UDim2.new(0, 444, 0, 251)
+anime.Active = true
+
+aimlock.Name = "aimlock"
+aimlock.Parent = ScreenGui
+aimlock.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+aimlock.BorderColor3 = Color3.fromRGB(36, 36, 36)
+aimlock.Position = UDim2.new(0.370171666, 0, 0.335356593, 0)
+aimlock.Size = UDim2.new(0, 330, 0, 27)
+aimlock.Font = Enum.Font.SourceSans
+aimlock.Text = "ace aimlock"
+aimlock.TextColor3 = Color3.fromRGB(130, 130, 130)
+aimlock.TextScaled = true
+aimlock.TextSize = 14.000
+aimlock.TextWrapped = true
+aimlock.MouseButton1Down:Connect(function()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/emersoncas/aimlock/main/aimlock",true))();
+end)
+
+anime2.Name = "anime2"
+anime2.Parent = aimlock
+anime2.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+anime2.BorderColor3 = Color3.fromRGB(36, 36, 36)
+anime2.Position = UDim2.new(-0.313070625, 0, -1.92873597, 0)
+anime2.Size = UDim2.new(0, 97, 0, 251)
+
+TextButton2.Name = "TextButton2"
+TextButton2.Parent = ScreenGui
+TextButton2.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+TextButton2.BorderColor3 = Color3.fromRGB(36, 36, 36)
+TextButton2.Position = UDim2.new(0.370171666, 0, 0.274658561, 0)
+TextButton2.Size = UDim2.new(0, 330, 0, 27)
+TextButton2.Font = Enum.Font.SourceSans
+TextButton2.Text = "fly"
+TextButton2.TextColor3 = Color3.fromRGB(130, 130, 130)
+TextButton2.TextScaled = true
+TextButton2.TextSize = 14.000
+TextButton2.TextWrapped = true
+anime2.MouseButton1Down:Connect(function()
+	loadstring(game:HttpGet('https://raw.githubusercontent.com/22kristina/swag/main/admin_fly'))()
+end)
+
+-- Scripts:
+
+local function BOGBF_fake_script() -- ScreenGui.LocalScript 
+	local script = Instance.new('LocalScript', ScreenGui)
+
+	-- Draggble
+	-- Credits: Veky
+	
+	local UserInputService = game:GetService("UserInputService")
+	
+	local gui = script.Parent
+	
+	local dragging
+	local dragInput
+	local dragStart
+	local startPos
+	
+	local function update(input)
+		local delta = input.Position - dragStart
+		gui.Position = gui:TweenPosition(UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y), 'Out', 'Linear', 0, true); -- drag speed
+	end
+	
+	gui.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+			dragging = true
+			dragStart = input.Position
+			startPos = gui.Position
+	
+			input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then
+					dragging = false
+				end
+			end)
+		end
+	end)
+	
+	gui.InputChanged:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+			dragInput = input
+		end
+	end)
+	
+	UserInputService.InputChanged:Connect(function(input)
+		if input == dragInput and dragging then
+			update(input)
+		end
+	end)
+end
+coroutine.wrap(BOGBF_fake_script)()
